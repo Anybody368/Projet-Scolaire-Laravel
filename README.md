@@ -10,7 +10,7 @@ Pour démarrer, vous devez :
 
 #### Les diapos des cours :
 
-- CM n°1 : Introduction à PHP
+- [CM n°1 : Introduction à PHP](https://adrien.krahenbuhl.fr/courses/IUTRS/W31/CM1/)
 
 #### Moodle exam
 
