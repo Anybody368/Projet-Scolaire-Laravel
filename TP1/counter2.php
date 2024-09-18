@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php if(isset($_COOKIE['nbr']))
+<?php if(isset($_COOKIE['nbr']) && is_numeric($_COOKIE['nbr']))
 {
     setcookie('nbr', $_COOKIE['nbr']+1, time() +1000);
 }
