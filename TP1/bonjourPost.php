@@ -3,10 +3,14 @@
 <html>
  
    <head>
-     <title>Exercice 3</title>
+     <title>Exercice 3 et 5</title>
    </head>
  
    <body>
+    <?php if($_SERVER['REQUEST_METHOD'] != "POST")
+    {
+      header("Location: formulaire.html");
+    }?>
      <p>Juste un test pour afficher du texte</p>
      <?php if(isset($_POST['firstname']) && isset($_POST['lastname']))
      {
