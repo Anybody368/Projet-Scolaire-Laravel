@@ -14,7 +14,7 @@ else {
   </head>
 
   <body>
-    <?php echo "<p>Cette page a été visitée ".$_COOKIE['nbr']." fois</p>";?>
+    <?php echo "<p>Cette page a été visitée ".htmlspecialchars($_COOKIE['nbr'])." fois</p>";?>
     
     <a href="resetCounter.php">Remettre le compteur à 0</a>
   </body>

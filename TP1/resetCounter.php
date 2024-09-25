@@ -1,3 +1,3 @@
 <?php session_start();
-$_SESSION['nbr'] = 0;
+unset($_SESSION['nbr']);
 header("Location: counter.php")?>
