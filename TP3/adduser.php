@@ -34,6 +34,16 @@ catch( PDOException $e ) {
     exit;
 }
 
+//On vérifie si le Login est déjà utilisé
+$verif = $pdo->prepare("SELECT login FROM Users WHERE login = :log");
+$verif->bindValue(':log', $login, PDO::PARAM_STR);
+$verif->execute();
+if($verif->fetch()) {
+    $_SESSION['message'] = "This login is already in use.";
+	header('Location: signup.php');
+	exit();
+}
+
 $request = $pdo->prepare("INSERT INTO Users (login, password) VALUES (:log , :pass )");
 $request->bindValue(':log', $login, PDO::PARAM_STR);
 $request->bindValue(':pass', $password, PDO::PARAM_STR);
@@ -42,10 +52,11 @@ $ok = $request->execute();
 
 if(!$ok)
 {
-    $_SESSION['message'] = "Login already in use.";
+    $_SESSION['message'] = "Heuuuu... Problème refrê.";
 	header('Location: signup.php');
 	exit();
 }
 
+$_SESSION['message'] = "Account succesfully created, please connect.";
 header('Location:signin.php');
 ?>
