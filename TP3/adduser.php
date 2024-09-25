@@ -25,6 +25,8 @@ if($password != $confPassword)
 	exit();
 } 
 
+$password = password_hash($password, PASSWORD_DEFAULT);
+
 require_once('bdd.php');
 try {
 	$pdo = new PDO($SQL_DSN);

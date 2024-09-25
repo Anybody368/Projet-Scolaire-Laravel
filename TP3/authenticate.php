@@ -67,7 +67,7 @@ if(!$row)
 	exit;
 }
 
-if($row['Password'] !== $password)
+if(!password_verify($password, $row['Password']))
 {
 	$_SESSION['message'] = "Wrong password.";
 	header('Location: signin.php');
