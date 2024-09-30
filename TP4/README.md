@@ -50,7 +50,7 @@ Cet exercice va vous permettre de créer une classe `User` faisant le lien entre
 
 1. Créez un répertoire `models`.
 2. Déplacer dans `models` le fichier `bdd.php`.
-3. Copiez dans `models` le fichier [`MyPDO.php`](corriges/TP4/models/MyPDO.php).
+3. Copiez dans `models` le fichier [`MyPDO.php`](correction/models/MyPDO.php).
 4. Créez dans `models` un fichier `User.php` qui contient la déclaration de la classe `User` avec :
 	- deux attributs privés pour le login et le mot de passe avec leurs getters/setters
 	- un attribut privé constant `USER_TABLE` contenant le nom de la table des utilisateurs à utiliser dans les champs `FROM` des requêtes SQL
