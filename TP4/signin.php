@@ -14,6 +14,7 @@
 			<label for="password">Password</label><input type="password" id="password" name="password" required>
 			<input type="submit" value="Signin">
 		</form>
+		<p>No account? <a href="signup.php">Sign up</a></p>
 <?php if ( !empty($_SESSION['message']) ) { ?>
 		<section>
 			<p><?= $_SESSION['message'] ?></p>

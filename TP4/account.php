@@ -19,6 +19,7 @@
 		</p>
 		<p><a href="signout.php">Sign out</a></p>
 		<p><a href="formpassword.php">Change password</a></p>
+		<p><a href="deleteuser.php">Delete account</a></p>
 <?php if ( !empty($_SESSION['message']) ) { ?>
 		<section>
 			<p><?= $_SESSION['message'] ?></p>
