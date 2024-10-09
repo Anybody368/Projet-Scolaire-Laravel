@@ -25,36 +25,16 @@ if($password != $confPassword)
 	exit();
 } 
 
+require_once('models/User.php');
+
 $password = password_hash($password, PASSWORD_DEFAULT);
 
-require_once('bdd.php');
+$user = new User($login, $password);
+
 try {
-	$pdo = new PDO($SQL_DSN);
-}
-catch( PDOException $e ) {
-    echo 'Erreur : '.$e->getMessage();
-    exit;
-}
-
-//On vérifie si le Login est déjà utilisé
-$verif = $pdo->prepare("SELECT login FROM Users WHERE login = :log");
-$verif->bindValue(':log', $login, PDO::PARAM_STR);
-$verif->execute();
-if($verif->fetch()) {
-    $_SESSION['message'] = "This login is already in use.";
-	header('Location: signup.php');
-	exit();
-}
-
-$request = $pdo->prepare("INSERT INTO Users (login, password) VALUES (:log , :pass )");
-$request->bindValue(':log', $login, PDO::PARAM_STR);
-$request->bindValue(':pass', $password, PDO::PARAM_STR);
-
-$ok = $request->execute();
-
-if(!$ok)
-{
-    $_SESSION['message'] = "Heuuuu... Problème refrê.";
+	$user->create();
+} catch (Exception $e) {
+	$_SESSION['message'] = $e;
 	header('Location: signup.php');
 	exit();
 }

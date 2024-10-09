@@ -30,48 +30,24 @@ $login = htmlspecialchars($_POST['login']);
 $password = htmlspecialchars($_POST['password']);
 
 /******************************************************************************
- * Initialisation de l'accès à la BDD
+ * Initialisation de l'accès indirect à la BDD
  */
 
-require_once('bdd.php');
+require_once('models/User.php');
 
 /******************************************************************************
  * Authentification
  */
 
-try {
-	$pdo = new PDO($SQL_DSN);
-}
-catch( PDOException $e ) {
-    echo 'Erreur : '.$e->getMessage();
-    exit;
-}
+$user = new User($login, $password);
 
-$request = $pdo->prepare("SELECT password FROM Users WHERE login = :log");
-$request->bindValue(':log', $login, PDO::PARAM_STR);
+$isok = $user->exists();
 
-$ok = $request->execute();
-
-if(!$ok)
+if(!$isok)
 {
-	$_SESSION['message'] = "T'es pas censé voir ça frêre.";
+	$_SESSION['message'] = "Username or Password incorrect";
 	header('Location: signin.php');
 	exit;
-}
-
-$row = $request->fetch();
-if(!$row)
-{
-	$_SESSION['message'] = "wrong login";
-	header('Location: signin.php');
-	exit;
-}
-
-if(!password_verify($password, $row['Password']))
-{
-	$_SESSION['message'] = "Wrong password.";
-	header('Location: signin.php');
-	exit();
 }
 
 $_SESSION['user'] = $login;
