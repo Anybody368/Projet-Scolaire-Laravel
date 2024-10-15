@@ -12,6 +12,7 @@ Pour démarrer, vous devez :
 
 - [CM n°1 : Introduction à PHP](https://adrien.krahenbuhl.fr/courses/IUTRS/W31/CM1/)
 - [CM n°2 : POO & PDO](https://adrien.krahenbuhl.fr/courses/IUTRS/W31/CM2/)
+- [CM n°3 : Laravel](https://adrien.krahenbuhl.fr/courses/IUTRS/W31/CM3/)
 
 #### Moodle exam
 
