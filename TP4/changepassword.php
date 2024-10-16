@@ -38,44 +38,31 @@ if(empty($_SESSION['user']))
 $password = htmlspecialchars($_POST['password']);
 $pass2 = htmlspecialchars($_POST['pass2']);
 
-if($password != $pass2)
+if($password !== $pass2)
 {
     $_SESSION['message'] = "Passwords don't match.";
     header('Location: formpassword.php');
     exit();
 }
 
-$password = password_hash($password, PASSWORD_DEFAULT);
-
 /******************************************************************************
  * Initialisation de l'accès à la BDD
  */
 
-require_once('bdd.php');
+require_once('models/User.php');
 
 /******************************************************************************
  * Changement du mot de passe dans la BDD
  */
 
+$user = new User($_SESSION['user'], $password);
+
 try {
-	$pdo = new PDO($SQL_DSN);
-}
-catch( PDOException $e ) {
-    echo 'Erreur : '.$e->getMessage();
-    exit;
-}
-
-$request = $pdo->prepare("UPDATE Users SET password = :pass WHERE login = :log");
-$request->bindValue(':log', $_SESSION['user'], PDO::PARAM_STR);
-$request->bindvalue(':pass', $password, PDO::PARAM_STR);
-
-$ok = $request->execute();
-
-if(!$ok)
-{
-	$_SESSION['message'] = "T'es pas censé voir ça frêre.";
-	header('Location: formpassword.php');
-	exit;
+	$user->modify();
+} catch (Exception $e) {
+	$_SESSION['message'] = $e;
+	header('Location: signup.php');
+	exit();
 }
 
 $_SESSION['message'] = "Password succesfully changed.";

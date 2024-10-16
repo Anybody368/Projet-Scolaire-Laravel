@@ -18,7 +18,7 @@ $login = htmlspecialchars($_POST['login']);
 $password = htmlspecialchars($_POST['password']);
 $confPassword = htmlspecialchars($_POST['pass2']);
 
-if($password != $confPassword)
+if($password !== $confPassword)
 {
    $_SESSION['message'] = "Password doesn't match.";
 	header('Location: signup.php');
@@ -26,8 +26,6 @@ if($password != $confPassword)
 } 
 
 require_once('models/User.php');
-
-$password = password_hash($password, PASSWORD_DEFAULT);
 
 $user = new User($login, $password);
 

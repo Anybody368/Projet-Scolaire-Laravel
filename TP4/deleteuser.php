@@ -9,26 +9,16 @@ if(empty($_SESSION['user']))
 	exit();
 }
 
-require_once('bdd.php');
+require_once('models/User.php');
+
+$user = new User($_SESSION['user']);
 
 try {
-	$pdo = new PDO($SQL_DSN);
-}
-catch( PDOException $e ) {
-    echo 'Erreur : '.$e->getMessage();
-    exit;
-}
-
-$request = $pdo->prepare("DELETE FROM Users WHERE login = :log");
-$request->bindValue(':log', $_SESSION['user'], PDO::PARAM_STR);
-
-$ok = $request->execute();
-
-if(!$ok)
-{
-	$_SESSION['message'] = "T'es pas censé voir ça frêre.";
-	header('Location: formpassword.php');
-	exit;
+	$user->delete();
+} catch (Exception $e) {
+	$_SESSION['message'] = $e;
+	header('Location: signup.php');
+	exit();
 }
 
 $_SESSION['message'] = "Account succesfully deleted.";

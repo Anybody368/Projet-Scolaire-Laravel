@@ -3,7 +3,7 @@
 	if(!file_exists($path))
 	{
 		echo 'fail';
-		throw new Exception("Base de donnée pas trouvée");
+		throw new PDOException("Base de donnée pas trouvée");
 	}
 	$SQL_DSN = "sqlite:".$_SERVER['DOCUMENT_ROOT'].'/'.$path;
 ?>

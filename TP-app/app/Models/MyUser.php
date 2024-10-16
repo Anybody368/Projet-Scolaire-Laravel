@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Models;
+
+use Illuminate\Support\Facades\DB;
+use PDO;
+
 require_once('MyPDO.php');
 const USER_TABLE = "Users";
 
@@ -28,7 +33,7 @@ class User
     
     public function exists() : bool
     {
-        $pdo = MyPdo::pdo();
+        $pdo = DB::connection()->getPdo();
 
         $request = $pdo->prepare("SELECT password FROM ".USER_TABLE." WHERE login = :log");
         $request->bindValue(':log', $this->m_login, PDO::PARAM_STR);
@@ -51,7 +56,7 @@ class User
     
     public function create()
     {
-        $pdo = MyPdo::pdo();
+        $pdo = DB::connection()->getPdo();
         
         $verif = $pdo->prepare("SELECT login FROM ".USER_TABLE." WHERE login = :log");
         $verif->bindValue(':log', $this->m_login, PDO::PARAM_STR);
@@ -74,7 +79,7 @@ class User
     
     public function modify()
     {
-        $pdo = MyPdo::pdo();
+        $pdo = DB::connection()->getPdo();
         
         $request = $pdo->prepare("UPDATE ".USER_TABLE." SET password = :pass WHERE login = :log");
         $request->bindValue(':log', $this->m_login, PDO::PARAM_STR);
@@ -90,7 +95,7 @@ class User
     
     public function delete()
     {
-        $pdo = MyPdo::pdo();
+        $pdo = DB::connection()->getPdo();
         
         $request = $pdo->prepare("DELETE FROM ".USER_TABLE." WHERE login = :log");
         $request->bindValue(':log', $this->m_login, PDO::PARAM_STR);
