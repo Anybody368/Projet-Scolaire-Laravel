@@ -38,7 +38,7 @@ Exercice 2 : Préparation des vues
 1. Pour chaque fichier de `resources/views/` :
 	- renommez-le en `.blade.php`.
  	- remplacez toutes les références à des fichiers PHP par des références à des routes
-	- ajoutez à tous les formulaire la directive `@csrf` (voir [la doc sur les CSRF](https://laravel.com/docs/10.x/csrf#preventing-csrf-requests) pour plus d'explications)
+	- ajoutez à tous les formulaire la directive `@csrf` (voir [la doc sur les CSRF](https://laravel.com/docs/11.x/csrf#preventing-csrf-requests) pour plus d'explications)
 
 
 Exercice 3 : Préparation de la BDD
@@ -77,8 +77,8 @@ Exercice 5 : Un contrôleur pour s'authentifier
 1. Remplacez l'utilisation de  `User` par `MyUser`.
 
 1. Dans la méthode `connect` :
-	- utilisez l'objet `$request` pour accéder aux données transmises en POST (voir [la documentation de Request](https://laravel.com/docs/10.x/requests)) et remplacez la vérification des données par des méthodes de `$request`,
-	- remplacer les `header('Location: ...'); exit;` par la méthode globale `redirect(<route>)` (voir [la documentation des Reponses HTTP](https://laravel.com/docs/10.x/responses#redirects)).
+	- utilisez l'objet `$request` pour accéder aux données transmises en POST (voir [la documentation de Request](https://laravel.com/docs/11.x/requests)) et remplacez la vérification des données par des méthodes de `$request`,
+	- remplacer les `header('Location: ...'); exit;` par la méthode globale `redirect(<route>)` (voir [la documentation des Reponses HTTP](https://laravel.com/docs/11.x/responses#redirects)).
 	- Remplacez toutes les `Exception` et `PDOException` par `\Exception` et `\PDOException`
 
 1. Ajoutez une route pour appeler la méthode `connect` après validation du formulaire de `signin.blade.php`.
