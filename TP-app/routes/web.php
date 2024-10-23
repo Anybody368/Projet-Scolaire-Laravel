@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return redirect('signin');
@@ -23,3 +24,8 @@ Route::get('/signup', function () {
 });
 
 Route::post('/authenticate', [UserController::class, 'connect']);
+Route::post('/adduser', [UserController::class, 'create']);
+Route::post('/changepassword', [UserController::class, 'updatePassword']);
+
+Route::get('/deleteuser', [UserController::class, 'delete']);
+Route::get('/signout', [UserController::class, 'disconnect']);

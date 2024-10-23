@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
-require_once('MyPDO.php');
-const USER_TABLE = "Users";
+const USER_TABLE = "MyUsers";
 
-class User
+class MyUser
 {
     private string $m_login;
     private ?string $m_password;
@@ -46,7 +45,7 @@ class User
             return false;
         }
         
-        if(!password_verify($this->m_password, $row['Password']))
+        if(!password_verify($this->m_password, $row['password']))
         {
             return false;
         }
@@ -62,7 +61,7 @@ class User
         $verif->bindValue(':log', $this->m_login, PDO::PARAM_STR);
         $verif->execute();
         if($verif->fetch(PDO::FETCH_ASSOC)) {
-            throw new Exception("Utilisateur déjà présent");
+            throw new \Exception("Utilisateur déjà présent");
         }
         
         $request = $pdo->prepare("INSERT INTO ".USER_TABLE." (login, password) VALUES (:log , :pass )");
@@ -73,7 +72,7 @@ class User
 
         if(!$ok)
         {
-            throw new Exception("Erreur inconnue");
+            throw new \Exception("Erreur inconnue");
         }
     }
     
