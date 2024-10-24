@@ -1,11 +1,3 @@
-<?php
-	session_start();
-	if ( empty($_SESSION['user']) )
-	{
-		header('Location: signin');
-		exit();
-	}
-?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -14,16 +6,16 @@
 	</head>
 	<body>
 		<p>
-			Hello <?= $_SESSION['user'] ?> !<br>
+			Hello {{ $login }} !<br>
 			Welcome on your account.
 		</p>
 		<p><a href="signout">Sign out</a></p>
 		<p><a href="formpassword">Change password</a></p>
 		<p><a href="deleteuser">Delete account</a></p>
-<?php if ( !empty($_SESSION['message']) ) { ?>
+		@if (session('message'))
 		<section>
-			<p><?= $_SESSION['message'] ?></p>
+			{{ session('message')}}
 		</section>
-<?php } ?>
+		@endif
 	</body>
 </html>

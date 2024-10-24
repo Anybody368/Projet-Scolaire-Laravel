@@ -16,10 +16,10 @@
 			<label for="pass2">Confirm password</label><input type="password" id="pass2" name="pass2" required>
 			<input type="submit" value="Signin">
 		</form>
-<?php if ( !empty($_SESSION['message']) ) { ?>
+		@if (session('message'))
 		<section>
-			<p><?= $_SESSION['message'] ?></p>
+			{{ session('message')}}
 		</section>
-<?php } ?>
+		@endif
 	</body>
 </html>

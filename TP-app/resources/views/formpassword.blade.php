@@ -1,12 +1,3 @@
-<?php
-	session_start();
-    if(empty($_SESSION['user']))
-    {
-        $_SESSION['message'] = "Please sign in first.";
-        header('Location: signin');
-		exit();
-    }
-?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,10 +13,10 @@
 			<input type="submit" value="Submit">
 		</form>
 		<p><a href="account">Go to account</a></p>
-<?php if ( !empty($_SESSION['message']) ) { ?>
+		@if (session('message'))
 		<section>
-			<p><?= $_SESSION['message'] ?></p>
+			{{ session('message')}}
 		</section>
-<?php } ?>
+		@endif
 	</body>
 </html>

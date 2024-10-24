@@ -76,13 +76,13 @@ class MyUser
         }
     }
     
-    public function modify()
+    public function modify(string $password)
     {
         $pdo = DB::connection()->getPdo();
         
         $request = $pdo->prepare("UPDATE ".USER_TABLE." SET password = :pass WHERE login = :log");
         $request->bindValue(':log', $this->m_login, PDO::PARAM_STR);
-        $request->bindvalue(':pass', password_hash($this->m_password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+        $request->bindvalue(':pass', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
 
         $ok = $request->execute();
 
@@ -90,6 +90,8 @@ class MyUser
         {
             throw new Exception("Erreur : modification non enregistrée");
         }
+
+        $this->setPassword($password);
     }
     
     public function delete()

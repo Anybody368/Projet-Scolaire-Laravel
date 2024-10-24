@@ -9,15 +9,10 @@ class UserController extends Controller
 {
     public function connect(Request $request)
     {
-        session_start();
-        unset($_SESSION['message']);
-
-
         // 2. On vérifie que les données attendues existent
         if (!$request->has('login') || !$request->has('password'))
         {
-            $_SESSION['message'] = "Some POST data are missing.";
-            return redirect('signin');
+            return redirect('signin')->with('message', 'Some POST data are missing.');
         }
 
         // 3. On sécurise les données reçues
@@ -31,11 +26,10 @@ class UserController extends Controller
 
         if(!$isok)
         {
-            $_SESSION['message'] = "Username or Password incorrect";
-            return redirect('signin');
+            return redirect('signin')->with('message', 'Username or Password incorrect');
         }
 
-        $_SESSION['user'] = $login;
+        $request->session()->put('user', $user);
 
         return redirect('account');
     }
@@ -43,13 +37,9 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        session_start();
-        unset($_SESSION['message']);
-
         if (!$request->has('login') || !$request->has('password') || !$request->has('pass2'))
         {
-            $_SESSION['message'] = "Some POST data are missing.";
-            return redirect('signup');
+            return redirect('signup')->with('message', 'Some POST data are missing.');
         }
 
         $login = $request->input('login');
@@ -57,8 +47,7 @@ class UserController extends Controller
 
         if($password !== $request->input('pass2'))
         {
-            $_SESSION['message'] = "Password doesn't match.";
-            return redirect('signup');
+            return redirect('signup')->with('message', 'Password don\'t match');
         }
 
         $user = new MyUser($login, $password);
@@ -66,85 +55,66 @@ class UserController extends Controller
         try {
             $user->create();
         } catch (Exception $e) {
-            $_SESSION['message'] = $e;
-            return redirect('signup');
+            return redirect('signup')->with('message', $e->getMessage());
         }
         
-        $_SESSION['message'] = "Account succesfully created, please connect.";
-        return redirect('signin');
+        return redirect('signin')->with('message', 'Account succesfully created, please connect.');
     }
 
 
     public function updatePassword(Request $request)
     {
-        session_start();
-        unset($_SESSION['message']);
-
-        if(empty($_SESSION['user']))
+        if(empty($request->user))
         {
-            $_SESSION['message'] = "Error, you are not connected.";
-            return redirect('signin');
+            return redirect('signin')->with('message', 'Error, you are not connected.');
         }
 
         if (!$request->has('password') || !$request->has('pass2'))
         {
-            $_SESSION['message'] = "Some POST data are missing.";
-            return redirect('formpassword');
+            return redirect('formpassword')->with('message', 'Some POST data are missing.');
         }
 
-        $login = $_SESSION['user'];
         $password = $request->input('password');
 
         if($password !== $request->input('pass2'))
         {
-            $_SESSION['message'] = "Password doesn't match.";
-            return redirect('formpassword');
+            return redirect('formpassword')->with('message', 'Password don\'t match.');
         }
 
-        $user = new MyUser($login, $password);
+        $user = $request->user;
 
         try {
-            $user->modify();
+            $user->modify($password);
         } catch (Exception $e) {
-            $_SESSION['message'] = $e;
-            return redirect('formpassword');
+            return redirect('formpassword')->with('message', $e->getMessage());
         }
-        
-        $_SESSION['message'] = "Password succesfully changed.";
-        return redirect('account');
+
+        return redirect('account')->with('message', 'Password succesfully changed.');
     }
 
 
     public function delete(Request $request)
     {
-        session_start();
-        unset($_SESSION['message']);
-
-        if(empty($_SESSION['user']))
+        if(empty($request->user))
         {
-            $_SESSION['message'] = "Error, you are not connected.";
-            return redirect('signin');
+            return redirect('signin')->with('message', 'Error, you are not connected.');
         }
 
-        $user = new MyUser($_SESSION['user']);
+        $user = $request->user;
 
         try {
             $user->delete();
         } catch (Exception $e) {
-            $_SESSION['message'] = $e;
-            return redirect('account');
+            return redirect('account')->with('message', $e->getMessage());
         }
 
-        $_SESSION['message'] = "Account succesfully deleted.";
-        return redirect('signin');
+        return redirect('signin')->with('message', 'Account succesfully deleted.');
     }
 
 
     public function disconnect(Request $request)
     {
-        session_start();
-	    session_destroy(); // ou unset($_SESSION['user']);
-        $_SESSION['message'] = "Succesfully disconnected.";
-	    return redirect('signin');
+        $request->session()->flush();
+	    return redirect('signin')->with('message', 'Succesfully disconnected.');
     }
 } ?>

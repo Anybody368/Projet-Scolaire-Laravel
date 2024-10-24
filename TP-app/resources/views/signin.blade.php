@@ -16,10 +16,10 @@
 			<input type="submit" value="Signin">
 		</form>
 		<p>No account? <a href="signup">Sign up</a></p>
-<?php if ( !empty($_SESSION['message']) ) { ?>
+		@if (session('message'))
 		<section>
-			<p><?= $_SESSION['message'] ?></p>
+			{{ session('message')}}
 		</section>
-<?php } ?>
+		@endif
 	</body>
 </html>
