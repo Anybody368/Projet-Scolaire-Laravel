@@ -7,5 +7,6 @@
     <body>
         <h1>@yield('title')</h1>
         @yield('content')
+        @include('shared.message')
     </body>
 </html>

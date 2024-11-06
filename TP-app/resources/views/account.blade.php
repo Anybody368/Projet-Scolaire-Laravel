@@ -29,12 +29,7 @@
 		Hello {{ $login }} !<br>
 		Welcome on your account.
 	</p>
-	<p><a href="signout">Sign out</a></p>
-	<p><a href="formpassword">Change password</a></p>
-	<p><a href="deleteuser">Delete account</a></p>
-	@if (session('message'))
-	<section>
-		{{ session('message')}}
-	</section>
-	@endif
+	<p><a href="{{route('user_signout')}}">Sign out</a></p>
+	<p><a href="{{route('view_password')}}">Change password</a></p>
+	<p><a href="{{route('user_delete')}}">Delete account</a></p>
 @endsection

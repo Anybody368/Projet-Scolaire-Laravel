@@ -10,26 +10,26 @@ Route::get('/', function () {
 
 Route::get('/signin', function () {
     return view('signin');
-});
+})->name('view_signin');
 
 
 Route::get('/signup', function () {
     return view('signup');
-});
+})->name('view_signup');
 
 Route::middleware(AuthenticateMyUser::class)->group(function () {
     Route::get('/account', function () {
         return view('account', ['login' => session('user')->getLogin()]);
-    });
+    })->name('view_account');
 
     Route::get('/formpassword', function () {
         return view('formpassword');
-    });
+    })->name('view_password');
 
-    Route::get('/deleteuser', [UserController::class, 'delete']);
-    Route::get('/signout', [UserController::class, 'disconnect']);
-    Route::post('/changepassword', [UserController::class, 'updatePassword']);
+    Route::get('/deleteuser', [UserController::class, 'delete'])->name('user_delete');
+    Route::get('/signout', [UserController::class, 'disconnect'])->name('user_signout');
+    Route::post('/changepassword', [UserController::class, 'updatePassword'])->name('user_update');
 });
 
-Route::post('/authenticate', [UserController::class, 'connect']);
-Route::post('/adduser', [UserController::class, 'create']);
+Route::post('/authenticate', [UserController::class, 'connect'])->name('user_connect');
+Route::post('/adduser', [UserController::class, 'create'])->name('user_create');

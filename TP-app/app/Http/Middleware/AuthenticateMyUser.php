@@ -17,7 +17,7 @@ class AuthenticateMyUser
     {
         if(!$request->session()->has('user'))
         {
-            return redirect('signin')->with('message', 'Error : You are not connected.');
+            return to_route('view_signin')->with('message', 'Error : You are not connected.');
         }
 
         $request->user = $request->session()->get('user');

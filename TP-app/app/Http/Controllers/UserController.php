@@ -12,7 +12,7 @@ class UserController extends Controller
         // 2. On vérifie que les données attendues existent
         if (!$request->has('login') || !$request->has('password'))
         {
-            return redirect('signin')->with('message', 'Some POST data are missing.');
+            return to_route('view_signin')->with('message', 'Some POST data are missing.');
         }
 
         // 3. On sécurise les données reçues
@@ -26,12 +26,12 @@ class UserController extends Controller
 
         if(!$isok)
         {
-            return redirect('signin')->with('message', 'Username or Password incorrect');
+            return to_route('view_signin')->with('message', 'Username or Password incorrect');
         }
 
         $request->session()->put('user', $user);
 
-        return redirect('account');
+        return to_route('view_account');
     }
 
 
@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         if (!$request->has('login') || !$request->has('password') || !$request->has('pass2'))
         {
-            return redirect('signup')->with('message', 'Some POST data are missing.');
+            return to_route('view_signup')->with('message', 'Some POST data are missing.');
         }
 
         $login = $request->input('login');
@@ -47,7 +47,7 @@ class UserController extends Controller
 
         if($password !== $request->input('pass2'))
         {
-            return redirect('signup')->with('message', 'Password don\'t match');
+            return to_route('view_signup')->with('message', 'Password don\'t match');
         }
 
         $user = new MyUser($login, $password);
@@ -55,10 +55,10 @@ class UserController extends Controller
         try {
             $user->create();
         } catch (Exception $e) {
-            return redirect('signup')->with('message', $e->getMessage());
+            return to_route('view_signup')->with('message', $e->getMessage());
         }
         
-        return redirect('signin')->with('message', 'Account succesfully created, please connect.');
+        return to_route('view_signin')->with('message', 'Account succesfully created, please connect.');
     }
 
 
@@ -66,14 +66,14 @@ class UserController extends Controller
     {
         if (!$request->has('password') || !$request->has('pass2'))
         {
-            return redirect('formpassword')->with('message', 'Some POST data are missing.');
+            return to_route('view_password')->with('message', 'Some POST data are missing.');
         }
 
         $password = $request->input('password');
 
         if($password !== $request->input('pass2'))
         {
-            return redirect('formpassword')->with('message', 'Password don\'t match.');
+            return to_route('view_password')->with('message', 'Password don\'t match.');
         }
 
         $user = $request->user;
@@ -81,10 +81,10 @@ class UserController extends Controller
         try {
             $user->modify($password);
         } catch (Exception $e) {
-            return redirect('formpassword')->with('message', $e->getMessage());
+            return to_route('view_password')->with('message', $e->getMessage());
         }
 
-        return redirect('account')->with('message', 'Password succesfully changed.');
+        return to_route('view_account')->with('message', 'Password succesfully changed.');
     }
 
 
@@ -95,16 +95,16 @@ class UserController extends Controller
         try {
             $user->delete();
         } catch (Exception $e) {
-            return redirect('account')->with('message', $e->getMessage());
+            return to_route('view_account')->with('message', $e->getMessage());
         }
 
-        return redirect('signin')->with('message', 'Account succesfully deleted.');
+        return to_route('view_signin')->with('message', 'Account succesfully deleted.');
     }
 
 
     public function disconnect(Request $request)
     {
         $request->session()->flush();
-	    return redirect('signin')->with('message', 'Succesfully disconnected.');
+	    return to_route('view_signin')->with('message', 'Succesfully disconnected.');
     }
 } ?>
