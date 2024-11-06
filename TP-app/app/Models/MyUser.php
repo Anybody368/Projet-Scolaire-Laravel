@@ -91,7 +91,7 @@ class MyUser
             throw new Exception("Erreur : modification non enregistrée");
         }
 
-        $this->setPassword($password);
+        $this->setPassword($password);  
     }
     
     public function delete()

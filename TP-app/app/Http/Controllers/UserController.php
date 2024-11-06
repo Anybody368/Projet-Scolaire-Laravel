@@ -64,11 +64,6 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
-        if(empty($request->user))
-        {
-            return redirect('signin')->with('message', 'Error, you are not connected.');
-        }
-
         if (!$request->has('password') || !$request->has('pass2'))
         {
             return redirect('formpassword')->with('message', 'Some POST data are missing.');
@@ -95,11 +90,6 @@ class UserController extends Controller
 
     public function delete(Request $request)
     {
-        if(empty($request->user))
-        {
-            return redirect('signin')->with('message', 'Error, you are not connected.');
-        }
-
         $user = $request->user;
 
         try {

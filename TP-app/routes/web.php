@@ -26,10 +26,10 @@ Route::middleware(AuthenticateMyUser::class)->group(function () {
         return view('formpassword');
     });
 
-    Route::get('/deleteuser', [UserController::class, 'delete'])->middleware(AuthenticateMyUser::class);
-    Route::get('/signout', [UserController::class, 'disconnect'])->middleware(AuthenticateMyUser::class);
+    Route::get('/deleteuser', [UserController::class, 'delete']);
+    Route::get('/signout', [UserController::class, 'disconnect']);
+    Route::post('/changepassword', [UserController::class, 'updatePassword']);
 });
 
 Route::post('/authenticate', [UserController::class, 'connect']);
 Route::post('/adduser', [UserController::class, 'create']);
-Route::post('/changepassword', [UserController::class, 'updatePassword']);
