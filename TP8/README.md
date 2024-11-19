@@ -13,9 +13,9 @@ Nous allons nous focaliser sur :
 
 Les pages de documentation qui vous seront utiles pour tous les exercices :
 
-- [la migration](https://laravel.com/docs/10.x/migrations)
-- [les types de données pour la migration](https://laravel.com/docs/10.x/migrations#available-column-types)
-- [l'ORM Eloquent pour la gestion des modèles](https://laravel.com/docs/10.x/eloquent)
+- [la migration](https://laravel.com/docs/11.x/migrations)
+- [les types de données pour la migration](https://laravel.com/docs/11.x/migrations#available-column-types)
+- [l'ORM Eloquent pour la gestion des modèles](https://laravel.com/docs/11.x/eloquent)
 
 
 Exercice 1 : La migration de MyUser
