@@ -17,9 +17,9 @@ Route::get('/signup', function () {
     return view('signup');
 })->name('view_signup');
 
-Route::middleware(AuthenticateMyUser::class)->group(function () {
+Route::prefix('admin')->middleware(AuthenticateMyUser::class)->group(function () {
     Route::get('/account', function () {
-        return view('account', ['login' => session('user')->getLogin()]);
+        return view('account'/*, ['login' => session('user')->getLogin()]*/);
     })->name('view_account');
 
     Route::get('/formpassword', function () {
