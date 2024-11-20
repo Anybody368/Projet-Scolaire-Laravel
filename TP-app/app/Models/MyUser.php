@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use PDO;
 
-const USER_TABLE = "MyUsers";
+const USER_TABLE = "myusers";
 
 class MyUser
 {
