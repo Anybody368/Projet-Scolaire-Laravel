@@ -20,7 +20,9 @@ class UserController extends Controller
         $password = $request->input('password');
 
 
-        $user = new MyUser($login, $password);
+        $user = new MyUser;
+        $user->login = $login;
+        $user->password = $password;
 
         $isok = $user->exists();
 
@@ -50,11 +52,13 @@ class UserController extends Controller
             return to_route('view_signup')->with('message', 'Password don\'t match');
         }
 
-        $user = new MyUser($login, $password);
+        $user = new MyUser;
+        $user->login = $login;
+        $user->password = $password;
 
         try {
-            $user->create();
-        } catch (Exception $e) {
+            $user->save();
+        } catch (QueryException $e) { //Ne catch pas, il faudrait faire la vérif avant
             return to_route('view_signup')->with('message', $e->getMessage());
         }
         
@@ -70,19 +74,17 @@ class UserController extends Controller
         }
 
         $password = $request->input('password');
+        $login = $request->user->login;
 
         if($password !== $request->input('pass2'))
         {
             return to_route('view_password')->with('message', 'Password don\'t match.');
         }
 
-        $user = $request->user;
+        $user = MyUser::where('login', $login)->first();
 
-        try {
-            $user->modify($password);
-        } catch (Exception $e) {
-            return to_route('view_password')->with('message', $e->getMessage());
-        }
+        $user->password = $password;
+        $user->save();
 
         return to_route('view_account')->with('message', 'Password succesfully changed.');
     }

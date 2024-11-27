@@ -4,7 +4,7 @@
 
 @section('content')
 	<p>
-		Hello {{ session('user')->getLogin() }} !<br>
+		Hello {{ session('user')->login }} !<br>
 		Welcome on your account.
 	</p>
 	<p><a href="{{route('view_formmemo')}}">Add Memo</a></p>

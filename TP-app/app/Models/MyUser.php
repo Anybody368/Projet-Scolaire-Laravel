@@ -4,15 +4,32 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
 use PDO;
+use Illuminate\Database\Eloquent\Model;
 
 const USER_TABLE = "myusers";
 
-class MyUser
+class MyUser extends Model
 {
+    //Variables pour Eloquent
+    protected $table = 'myusers';
+    protected $primaryKey = 'login';
+    //public $incrementing = false;
+    protected $keyType = 'string';
+    public $timestamps = false;
+
+    //devrait permettre de récup tous les mémos d'un utilisateur
+    public function memos() : HasMany
+    {
+        return $this->$user->hasMany(Memo::class, 'owner');
+    }
+
+
     private string $m_login;
     private ?string $m_password;
     
-    public function __construct(string $login, string $password = null)
+    //Tout ce qui est après n'est plus nécéssaire grace à Eloquent
+
+   /* public function __construct(string $login, string $password = null)
     {
         $this->m_login = $login;
         $this->m_password = $password;
@@ -107,5 +124,5 @@ class MyUser
         {
             throw new Exception("Erreur à la suppression");
         }
-    }
+    }*/
 }
